@@ -8,8 +8,8 @@ from predict import indoor_class
 os.putenv('LANG', 'en_US.UTF-8')
 os.putenv('LC_ALL', 'en_US.UTF-8')
 
-application = Flask(__name__)
-CORS(application)
+app = Flask(__name__)
+CORS(app)
 
 
 # @cross_origin()
@@ -19,13 +19,13 @@ class ClientApp:
         self.classifier = indoor_class(self.filename)
 
 
-@application.route("/", methods=['GET'])
+@app.route("/", methods=['GET'])
 @cross_origin()
 def home():
     return render_template('index.html')
 
 
-@application.route("/predict", methods=['POST'])
+@app.route("/predict", methods=['POST'])
 @cross_origin()
 def predictRoute():
     image = request.json['image']
@@ -39,4 +39,4 @@ clApp = ClientApp()
 if __name__ == "__main__":
     # clApp = ClientApp()
     # application.run(host='0.0.0.0', port=port)
-    application.run(debug=True)
+    app.run(debug=True)
